@@ -149,13 +149,13 @@ class UserController extends Controller
         
         //  VALIDASI YANG SALAH
         /* -- VALIDASI INPUT YANG SALAH -- */
-        $validateData = $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'avatar' => 'required',
-        ]);
+//         $validateData = $request->validate([
+//             'name' => 'required',
+//             'username' => 'required',
+//             'email' => 'required',
+//             'password' => 'required',
+//             'avatar' => 'required',
+    //    ]);
 
         $newHistoryLog = new HistoryLog();
         $newHistoryLog->datetime = date('Y-m-d H:i:s');
