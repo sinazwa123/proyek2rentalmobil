@@ -94,11 +94,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'role' => 'required',
-            'nim' => 'nullable',
-            'nip' => 'nullable',
-            'prodi' => 'nullable',
-            'fakultas' => 'nullable',
-            'tipe_keanggotaan' => 'nullable',
+           
         ]);
 
         $newHistoryLog = new HistoryLog();
@@ -111,11 +107,6 @@ class UserController extends Controller
         $user->name = $validateData['name'];
         $user->username = $validateData['username'];
         $user->email = $validateData['email'];
-        $user->nim = $validateData['nim'];
-        $user->nim = $validateData['nip'];
-        $user->prodi = $validateData['prodi'];
-        $user->fakultas = $validateData['fakultas'];
-        $user->tipe_keanggotaan = $validateData['tipe_keanggotaan'];
         $user->password = Hash::make($validateData['password']);
 
         if ($request->hasFile('avatar')) {
@@ -144,17 +135,26 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+      
+        // VALIDASI YANG BENAR
+        /* -- VALIDASI INPUT YANG BENAR -- */
         $validateData = $request->validate([
             'name'   => 'required|string|min:3',
             'username'   => 'required|alpha_dash|unique:users,username,'.$id,
             'email'   => 'required|unique:users,email,'.$id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'role' => 'required',
-            'nim' => 'nullable',
-            'nip' => 'nullable',
-            'prodi' => 'nullable',
-            'fakultas' => 'nullable',
-            'tipe_keanggotaan' => 'nullable'
+           
+        ]);
+        
+        //  VALIDASI YANG SALAH
+        /* -- VALIDASI INPUT YANG SALAH -- */
+        $validateData = $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'avatar' => 'required',
         ]);
 
         $newHistoryLog = new HistoryLog();
@@ -166,12 +166,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name = $validateData['name'];
         $user->username = $validateData['username'];
-        $user->email = $validateData['email'];
-        $user->nim = $validateData['nim'];
-        $user->nim = $validateData['nip'];
-        $user->prodi = $validateData['prodi'];
-        $user->fakultas = $validateData['fakultas'];
-        $user->tipe_keanggotaan = $validateData['tipe_keanggotaan'];
+        $user->email = $validateData['email']
 
          if ($request->hasFile('avatar')) {
             // Delete Img
